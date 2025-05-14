@@ -88,17 +88,11 @@
             height: calc(100% - 30px);
         }
 
-        .image-placeholder {
-            width: 70%;
-            height: 70%;
-            background-color: rgba(0, 88, 122, 0.5);
+        .character-image {
+            max-width: 70%;
+            max-height: 70%;
             border-radius: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #00e8ff;
-            font-size: 18px;
-            border: 2px dashed #00b8e0;
+            animation: float 5s ease-in-out infinite;
         }
 
         .right-side {
@@ -290,9 +284,7 @@
                     <div class="browser-address"></div>
                 </div>
                 <div class="browser-content">
-                    <div class="image-placeholder floating">
-                        ADD YOUR IMAGE HERE
-                    </div>
+                    <img src="gupipfp.png" alt="Oceanic Character" class="character-image floating">
                 </div>
             </div>
         </div>
