@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCEANIC.</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #003049;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #e6e6e6;
+            background-image: linear-gradient(to bottom, #001924, #003049, #00587a);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .left-side {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .browser-window {
+            background-color: rgba(0, 75, 107, 0.8);
+            border-radius: 10px;
+            border: 2px solid #00b8e0;
+            width: 450px;
+            height: 450px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 184, 224, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .browser-top {
+            background-color: rgba(0, 67, 96, 0.9);
+            height: 30px;
+            border-bottom: 2px solid #00b8e0;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .browser-button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #e8e8e8;
+            margin-right: 8px;
+        }
+
+        .browser-address {
+            height: 10px;
+            background-color: rgba(0, 88, 122, 0.7);
+            border-radius: 5px;
+            margin-left: 10px;
+            flex-grow: 1;
+        }
+
+        .browser-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100% - 30px);
+        }
+
+        .image-placeholder {
+            width: 70%;
+            height: 70%;
+            background-color: rgba(0, 88, 122, 0.5);
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #00e8ff;
+            font-size: 18px;
+            border: 2px dashed #00b8e0;
+        }
+
+        .right-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px rgba(0, 184, 224, 0.7);
+            background: linear-gradient(45deg, #00b8e0, #80f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .button {
+            background-color: rgba(0, 88, 122, 0.7);
+            color: #e6e6e6;
+            border: 2px solid #00b8e0;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            width: 250px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .button:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 184, 224, 0.4), transparent);
+            transition: all 0.5s;
+            z-index: -1;
+        }
+
+        .button:hover:before {
+            left: 100%;
+        }
+
+        .button:hover {
+            box-shadow: 0 0 15px rgba(0, 184, 224, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 40px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+            background-color: rgba(0, 88, 122, 0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            color: #80f3ff;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 15px rgba(0, 184, 224, 0.5);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #00b8e0;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        /* Ocean background */
+        .ocean {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* Bubbles */
+        .bubble {
+            position: absolute;
+            bottom: -20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: bubble-rise linear infinite;
+        }
+
+        @keyframes bubble-rise {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-120vh) translateX(20px);
+                opacity: 0;
+            }
+        }
+
+        /* Seaweed */
+        .seaweed {
+            position: absolute;
+            bottom: 0;
+            width: 20px;
+            background-color: #00704a;
+            border-radius: 50px;
+            transform-origin: bottom center;
+            animation: sway 8s ease-in-out infinite;
+        }
+
+        @keyframes sway {
+            0% { transform: rotate(5deg); }
+            50% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+
+        /* Water surface effect */
+        .water-surface {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background: linear-gradient(to bottom, rgba(0, 160, 200, 0.3), transparent);
+            box-shadow: 0 5px 15px rgba(0, 160, 200, 0.3);
+            z-index: 1;
+            transform: translateY(-25px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Ocean background -->
+    <div class="ocean" id="ocean"></div>
+    <div class="water-surface"></div>
+
+    <div class="logo">🐠</div>
+    
+    <div class="container">
+        <div class="left-side">
+            <div class="browser-window">
+                <div class="browser-top">
+                    <div class="browser-button"></div>
+                    <div class="browser-button"></div>
+                    <div class="browser-button"></div>
+                    <div class="browser-address"></div>
+                </div>
+                <div class="browser-content">
+                    <div class="image-placeholder floating">
+                        ADD YOUR IMAGE HERE
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="right-side">
+            <div class="title">OCEANIC.</div>
+            <div class="button">DIVE DEEPER.</div>
+            <div class="button">OCEAN LIFE.</div>
+            <div class="button">THE CURRENT.</div>
+            
+            <div class="social-icons">
+                <div class="social-icon">🐙</div>
+                <div class="social-icon">🐬</div>
+                <div class="social-icon">🐋</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        Oceanic Adventures<br>
+        Exploring The Deep Blue
+    </div>
+
+    <script>
+        // Create bubbles
+        const ocean = document.getElementById('ocean');
+        const bubbleCount = 40;
+        
+        for (let i = 0; i < bubbleCount; i++) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('bubble');
+            
+            // Random positioning
+            const startPosX = Math.random() * 100;
+            bubble.style.left = `${startPosX}%`;
+            
+            // Random size
+            const size = Math.random() * 20 + 5;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            
+            // Random opacity
+            bubble.style.opacity = Math.random() * 0.4 + 0.1;
+            
+            // Random animation duration
+            const duration = Math.random() * 10 + 10;
+            bubble.style.animationDuration = `${duration}s`;
+            
+            // Add some delay
+            const delay = Math.random() * 10;
+            bubble.style.animationDelay = `${delay}s`;
+            
+            ocean.appendChild(bubble);
+        }
+        
+        // Create seaweed
+        const seaweedCount = 8;
+        for (let i = 0; i < seaweedCount; i++) {
+            const seaweed = document.createElement('div');
+            seaweed.classList.add('seaweed');
+            
+            // Random positioning
+            const posX = Math.random() * 100;
+            seaweed.style.left = `${posX}%`;
+            
+            // Random height
+            const height = Math.random() * 120 + 80;
+            seaweed.style.height = `${height}px`;
+            
+            // Random width
+            const width = Math.random() * 10 + 5;
+            seaweed.style.width = `${width}px`;
+            
+            // Random animation duration
+            const duration = Math.random() * 5 + 5;
+            seaweed.style.animationDuration = `${duration}s`;
+            
+            // Random animation delay
+            const delay = Math.random() * 2;
+            seaweed.style.animationDelay = `${delay}s`;
+            
+            ocean.appendChild(seaweed);
+        }
+    </script>
+</body>
+</html>
